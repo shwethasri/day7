@@ -1,0 +1,13 @@
+/* stylesheet for dynamictable.html */
+.ascdesc{
+    align-items: center;
+    border: 0;
+    border-radius: 3%;
+    padding: 0;
+}
+#tableDiv{
+    align-items: center;
+    height: 50%;
+    margin: 0 auto;
+    width: 30%;
+}
