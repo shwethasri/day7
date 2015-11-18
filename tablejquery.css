@@ -1,0 +1,18 @@
+/* stylesheet for dynamictable.html */
+.ascdesc{
+    align-items: center;
+    border: 0;
+    border-radius: 3%;
+    padding: 0;
+}
+.rows{
+    align-items: center;
+    border: solid 1px;
+    border-color: #696969;
+}
+#tableDiv{
+    align-items: center;
+    height: 50%;
+    margin: 0 auto;
+    width: 30%;
+}

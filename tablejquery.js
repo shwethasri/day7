@@ -88,28 +88,86 @@ var employee =[
 function createTable()
 {
     var tableDiv = $('#tableDiv');
-    var table = $('<table></table>');
+    var table = $('<table class="rows"></table>');
     $(table).attr('id',"dynamictable");
     var rowCount = employee.length;
     var column = Object.keys(employee[0]);
     var colCount = column.length;
-    table.border =1;
-    var t = $('<tr></tr>');
+    var t = $('<tr class="rows"></tr>');
     for ( k = 0; k < colCount; k++)
     {
-      var th = $('<th>'+ column[k]+'<button class="ascdesc" onclick="sortac('+ k +')">&#9652</button><button class="ascdesc" onclick="sortdc('+ k +')">&#9662</button>' +'</th>');
+      var th = $('<th class="rows">'+ column[k]+'<button class="ascdesc" onclick="sortac('+ k +')">&#9652</button><button class="ascdesc" onclick="sortdc('+ k +')">&#9662</button>' +'</th>');
       t.append(th);
     }
     table.append(t);
     for( i = 0; i < rowCount; i++ )
     {
-      var tr = $('<tr></tr>');
+      var tr = $('<tr class="rows"></tr>');
       for ( j = 0; j < colCount; j++ )
       {
-        var td = $('<td>'+employee[i][column[j]]+'</td>');
+        var td = $('<td class="rows">'+employee[i][column[j]]+'</td>');
         tr.append(td);
       }
       table.append(tr);
     }
     tableDiv.append(table);
+}
+function sortac(column)
+{
+  var rowCount = employee.length;
+  var col = Object.keys(employee[0]);
+  var colCount = column.length;
+  var temp = "", a, b;
+  for ( var i = 0; i < rowCount; i++ )
+  {
+    for (var j = i; j < rowCount-1; j++)
+    {
+      m = j+1;
+      a = employee[j][col[column]];
+      b = employee[m][col[column]];
+      if( a < b )
+      {
+          temp = employee[j] ;
+          employee[j] = employee[m];
+          employee[m] = temp;
+      }
+    }
+  }
+  sortedTable(employee);
+}
+function sortdc(column)
+{
+  var rowCount = employee.length;
+  var col = Object.keys(employee[0]);
+  var colCount = column.length;
+  var temp = "", a, b;
+  for ( var i = 0; i < rowCount; i++ )
+  {
+    for (var j = i; j < rowCount-1; j++)
+    {
+      m = j+1;
+      a = employee[j][col[column]];
+      b = employee[m][col[column]];
+      if( a > b )
+      {
+          temp = employee[j] ;
+          employee[j] = employee[m];
+          employee[m] = temp;
+      }
+    }
+  }
+  sortedTable(employee);
+}
+function sortedTable(arr)
+{
+  var rowCount = arr.length;
+  var col = Object.keys(arr[0]);
+  var colCount = col.length;
+  for( i = 0; i < rowCount; i++ )
+  {
+    for(var j = 0; j < colCount; j++)
+    {
+      $('#dynamictable tr:eq('+ (i+1) +') td:eq(' + j+')').html(arr[i][col[j]]);
+    }
+  }
 }
