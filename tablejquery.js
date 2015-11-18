@@ -89,6 +89,7 @@ function createTable()
 {
     var tableDiv = $('#tableDiv');
     var table = $('<table></table>');
+    $(table).attr('id',"dynamictable");
     var rowCount = employee.length;
     var column = Object.keys(employee[0]);
     var colCount = column.length;
@@ -96,7 +97,7 @@ function createTable()
     var t = $('<tr></tr>');
     for ( k = 0; k < colCount; k++)
     {
-      var th = $('<th>'+ column[k] +'</th>');
+      var th = $('<th>'+ column[k]+'<button class="ascdesc" onclick="sortac('+ k +')">&#9652</button><button class="ascdesc" onclick="sortdc('+ k +')">&#9662</button>' +'</th>');
       t.append(th);
     }
     table.append(t);

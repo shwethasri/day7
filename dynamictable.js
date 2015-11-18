@@ -75,25 +75,24 @@ var student = [
       var colCount = column.length;
       table.id = "student-Informaton";
       table.border=1;
+      var t = document.createElement('tr');
+      for ( k = 0; k < colCount; k++)
+      {
+        var th = document.createElement('th');
+        th.innerHTML = column[k]+'<button class="ascdesc" onclick="sortac('+ k +')">&#9652</button><button class="ascdesc" onclick="sortdc('+ k +')">&#9662</button>';
+       t.appendChild(th);
+      }
+      table.appendChild(t);
       for ( var i = 0; i < rowCount; i++ )
       {
         var tr = document.createElement('tr');
         for(var j = 0; j < colCount; j++ )
         {
-            if ( i === 0 )
-            {
-              var th = document.createElement('th');
-              th.innerHTML = column[j] +'<button class="ascdesc" onclick="sortac('+ j +')">&#9652</button><button class="ascdesc" onclick="sortdc('+ j +')">&#9662</button>';
-              th.id = column[j] + "h";
-              tr.appendChild(th);
-            }
-            else {
-                var td = document.createElement('td');
-                td.innerHTML = student[i][column[j]];
-                tr.appendChild(td);
-            }
+            var td = document.createElement('td');
+            td.innerHTML = student[i][column[j]];
+            tr.appendChild(td);
         }
-        table.appendChild(tr);
+      table.appendChild(tr);
       }
       tableDiv.appendChild(table);
   }
