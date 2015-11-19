@@ -93,16 +93,29 @@ function createTable()
     var rowCount = employee.length;
     var column = Object.keys(employee[0]);
     var colCount = column.length;
+    var tt =$('<th class="rows"><button id="filter" onclick="filter()">&#947</button></th>');
+    tt.addClass("ascdesc");
+    var ts =$('<tr class="rows"></tr>');
+    ts.append(tt);
+    table.append(ts);
     var t = $('<tr class="rows"></tr>');
     for ( k = 0; k < colCount; k++)
     {
-      var th = $('<th class="rows">'+ column[k]+'<button class="ascdesc" onclick="sortac('+ k +')">&#9652</button><button class="ascdesc" onclick="sortdc('+ k +')">&#9662</button>' +'</th>');
+      var th = $('<th id="'+column[k]+'h">'+ column[k]+'<button class="ascdesc" onclick="sortac('+ k +')">&#9652</button><button class="ascdesc" onclick="sortdc('+ k +')">&#9662</button>' +'</th>');
+      th.addClass("tablehead");
       t.append(th);
     }
     table.append(t);
     for( i = 0; i < rowCount; i++ )
     {
-      var tr = $('<tr class="rows"></tr>');
+      var tr = $('<tr id="row'+i+'"></tr>');
+      if((i % 2) === 0)
+      {
+        tr.addClass("evenrows");
+      }
+      else{
+        tr.addClass("oddrows");
+      }
       for ( j = 0; j < colCount; j++ )
       {
         var td = $('<td class="rows">'+employee[i][column[j]]+'</td>');
@@ -168,6 +181,86 @@ function sortedTable(arr)
     for(var j = 0; j < colCount; j++)
     {
       $('#dynamictable tr:eq('+ (i+1) +') td:eq(' + j+')').html(arr[i][col[j]]);
+    }
+  }
+}
+function paging()
+{
+  var pagdiv = $('#tableDiv');
+  var noofrecords = employee.length;
+  var itemsperpage = 4;
+  var pages = Math.ceil(noofrecords/itemsperpage);
+  currentPage = 1;
+  var prevs = $('<a href="#" onclick="prevPage()">previous</a>');
+  pagdiv.append(prevs);
+  for(var i = 1; i <= pages; i++ )
+  {
+    var p = $('<a href="#" onclick="showPage('+ i +'">'+ i +'</a>');
+    pagdiv.append(p);
+  }
+  var nexts = $('<a href="#" onclick="nextPage()">next</a>');
+  pagDiv.append(nexts);
+  function prev()
+  {
+    if(currentPage > 1)
+    {
+      showPage(currentPage-1);
+    }
+  }
+  function next()
+  {
+    if(currentPage < pages )
+    {
+      showPage(currentPage+1);
+    }
+  }
+}
+function showPage(pageNumber)
+{
+  var fr = (pageNumber - 1)*itemsperpage + 1;
+  var to = fr + itemsperpage - 1;
+  var col = Object.keys(employee[0]);
+  var colCount = col.length;
+  for(var i = fr; i <= to; i++)
+  {
+    for(var j = 0;j < colCount;j++)
+    {
+      $('#dynamictable tr:eq('+ (i+1) +') td:eq(' + j+')').html(employee[i][col[j]]);
+    }
+  }
+  var l = $('<label id="showpage">showing'+ fr +'to'+ to +'of'+ employee.length +'records </label>');
+}
+function filter()
+{
+  var tableDiv = $('#tableDiv');
+  var table = $('#dynamictable');
+  var col = Object.keys(employee[0]);
+  var colCount = col.length;
+  for ( k = 0; k < colCount; k++)
+  {
+    var th = $('<td><input id="'+col[k]+'f" type="search" onchange="filt('+ k +')"></td>');
+    table.append(th);
+  }
+  tableDiv.append(table);
+}
+function filt(column)
+{
+  var rowCount = employee.length;
+  var col = Object.keys(employee[0]);
+  var colCount = column.length;
+  var val = $('#'+ col[column] +'f').text();
+  for(var i = 0; i < rowCount; i++ )
+  {
+    for(var j = i; j < rowCount-1; j++ )
+    {
+      if(val === employee[j][col[column]] )
+      {
+        $('#dynamictable tr:eq('+ (j+1) +')').show();
+        break;
+      }
+      else {
+        $('#dynamictable tr:eq('+ (j+1) +')').hide();
+      }
     }
   }
 }
